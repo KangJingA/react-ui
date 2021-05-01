@@ -45,10 +45,10 @@ const BasicTable = () => {
     selectedFlatRows // gives you flat array of rows currently selected in the table
   } = tableInstance; 
 
-  useEffect(()=> {
-    console.log(selectedFlatRows);
-    console.log(typeof selectedFlatRows)
-  },[selectedFlatRows])
+//   useEffect(()=> {
+//     console.log(selectedFlatRows);
+//     console.log(typeof selectedFlatRows)
+//   },[selectedFlatRows])
 
   // just grab 10 rows
   const firstPageRows = rows.slice(0,10);

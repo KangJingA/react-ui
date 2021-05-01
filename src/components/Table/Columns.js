@@ -18,7 +18,12 @@ export const Columns = [
     {
         Header: 'First Name',
         Footer: 'First Name',
-        accessor: 'first_name'
+        accessor: 'first_name',
+        // Cell: ( props ) => {
+        //     return (
+        //         <button onClick={(e)=>console.log(props)}>{props.value}</button>
+        //     )
+        // }
     },
     {
         Header: 'Last Name',
