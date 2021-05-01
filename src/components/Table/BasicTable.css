@@ -4,7 +4,7 @@ table {
     width: 100%;
   }
 
-thead th {
+thead th, tfoot td {
     background-color: #789465;
     color: white;
 }  

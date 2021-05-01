@@ -6,17 +6,14 @@
 // 6.include CSS for tableData
 
 import { useMemo } from "react";
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table"; ////
 import table_data from "../data/table_data.json"; // step 1
 import { Columns, GroupedColumns } from "./Columns";
 
 import './BasicTable.css';
-const BasicTable = () => {
-  // react-table reccomends memoisation of data --> ensures that data is not loaded again at every render
-  // memoization: optimization technique used primarily to speed up computer programs by
-  // storing the results of expensive function calls and returning the cached result when the same inputs occur again
+const SortingTable = () => {
+
   const columns = useMemo(() => Columns, []);
-  // const columns = useMemo(() => GroupedColumns, []); // for grouped columns
   const data = useMemo(() => table_data, []);
 
   // step 3
@@ -24,7 +21,8 @@ const BasicTable = () => {
   const tableInstance = useTable({
     columns: columns,
     data: data,
-  });
+  },
+  useSortBy); //pass useSortBy hook as argument into the useTableHook --> adds sorting feature, add into the th
 
   // step 5
   // destructure properties and methods from table instance
@@ -51,7 +49,16 @@ const BasicTable = () => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map( (column) => (
-                    <th {...column.getHeaderProps()}>{column.render('Header')}</th> // render the poperty specified Columns.js
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                        {column.render('Header')}       
+                        <span>
+                            {column.isSorted   // add icon
+                            ? column.isSortedDesc
+                                ? ' 🔽'
+                                : ' 🔼'
+                            : ''}
+                        </span>
+                        </th> 
                 ))}
             </tr>
           ))}
@@ -91,4 +98,4 @@ const BasicTable = () => {
   );
 };
 
-export default BasicTable;
+export default SortingTable;
