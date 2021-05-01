@@ -49,7 +49,8 @@ const SortingTable = () => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map( (column) => (
-                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    // add here to sort
+                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>  
                         {column.render('Header')}       
                         <span>
                             {column.isSorted   // add icon

@@ -1,5 +1,5 @@
 // step 2 
-// each coloumn is represented by an object in the array
+// each column is represented by an object in the array
 // u can pick what data to be rendered in the UI
 
 import { format } from 'date-fns';

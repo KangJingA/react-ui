@@ -1,5 +1,7 @@
+// added sorting functionality
+
 import { useMemo, useEffect } from "react";
-import { useTable, useRowSelect } from "react-table";
+import { useTable, useSortBy, useRowSelect } from "react-table";
 import table_data from "../data/table_data.json"; // step 1
 import { Columns } from "./Columns";
 
@@ -18,6 +20,7 @@ const BasicTable = () => {
         columns: columns,
         data: data,
     },
+    useSortBy,
     useRowSelect, // helps to keep track of the selected row
     hooks => { // programmatically add checkbox column to the table
         hooks.visibleColumns.push(columns => [ 
@@ -56,13 +59,24 @@ const BasicTable = () => {
   // th: table header cell -> bold and centered by default
   // td: table data cell -> regular and left-aligned by default
   return (
-    <>
+    <div className="wrapper">
         <table {...getTableProps()}>
         <thead >
             {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map( (column) => (
-                        <th {...column.getHeaderProps()}>{column.render('Header')}</th> // render the poperty specified Columns.js
+                        // render the poperty specified Columns.js
+                        // render icon beside header
+                        <th {...column.getHeaderProps(column.getSortByToggleProps())}> 
+                            {column.render('Header')} 
+                            <span>
+                                {column.isSorted   // add icon
+                                ? column.isSortedDesc
+                                    ? ' 🔽'
+                                    : ' 🔼'
+                                : null}
+                            </span>
+                        </th> 
                     ))}
                 </tr>
             ))}
@@ -97,7 +111,7 @@ const BasicTable = () => {
         )}
         </code>
     </pre>
-  </>          
+  </div>          
   );
 };
 
