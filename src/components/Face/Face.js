@@ -17,38 +17,49 @@ const face = () => {
   const mouthRadius = 150;
   // read the docs man
   const mouthArc = arc()
-    .innerRadius(mouthRadius) 
+    .innerRadius(mouthRadius)
     .outerRadius(mouthRadius + mouthWidth)
-    .startAngle(Math.PI /2 ) // starts fomr 12 oclock
-    .endAngle(Math.PI * 3 /2);
+    .startAngle(Math.PI / 2) // starts fomr 12 oclock
+    .endAngle((Math.PI * 3) / 2);
+
+  const browWidth = 5;
+  const browRadius = 50;
+  const browArc = arc()
+    .innerRadius(browRadius)
+    .outerRadius(browRadius + browWidth)
+    .startAngle(0) // starts fomr 12 oclock
+    .endAngle(Math.PI * 2);
 
   return (
     <svg width={width} height={height}>
       {/* svg group element */}
+      {/* kinda works like a div, puts all svg elements together */}
       {/* translate everything to the center */}
-      <g transform={`translate(${centerX},${centerY})`}>        
+      <g transform={`translate(${centerX},${centerY})`}>
         <circle
           r={centerY - strokeWidth / 2}
           fill="yellow"
           stroke="black"
           strokeWidth={strokeWidth}
         ></circle>
-        <circle
-          cx={-eyeOffsetX}
-          cy={-eyeOffsetY}
-          r={eyeRadius}
-          fill="black"
-          stroke="black"
-          strokeWidth="2px"
-        ></circle>
-        <circle
-          cx={eyeOffsetX}
-          cy={-eyeOffsetY}
-          r={eyeRadius}
-          fill="black"
-          stroke="black"
-          strokeWidth="2px"
-        ></circle>
+        <g transform={`translate(${-eyeOffsetX},${-eyeOffsetY})`}>
+          <path d={browArc()} fill="red"></path>
+          <circle
+            r={eyeRadius}
+            fill="black"
+            stroke="black"
+            strokeWidth="2px"
+          ></circle>
+        </g>
+        <g transform={`translate(${eyeOffsetX},${-eyeOffsetY})`}>
+          <path d={browArc()} fill="aqua"></path>
+          <circle
+            r={eyeRadius}
+            fill="black"
+            stroke="black"
+            strokeWidth="2px"
+          ></circle>
+        </g>
         <path d={mouthArc()}></path>
       </g>
     </svg>
