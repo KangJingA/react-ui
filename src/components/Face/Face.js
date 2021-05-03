@@ -1,42 +1,56 @@
+import { arc } from "d3";
+
 const face = () => {
+  const width = 960;
+  const height = 500;
 
-    const width= 960; 
-    const height= 500;
+  const centerX = width / 2;
+  const centerY = height / 2;
+  const strokeWidth = 10;
 
-    const centerX = width /2 ;
-    const centerY = height/2 ;
-    const strokeWidth = 10;
+  const eyeOffsetX = 90;
+  const eyeOffsetY = 90;
 
-    const eyeOffsetX = 90;
-    const eyeOffsetY = 90;
+  const eyeRadius = 40;
 
-    const eyeRadius = 40;
+  const mouthWidth = 10;
+  const mouthRadius = 150;
+  // read the docs man
+  const mouthArc = arc()
+    .innerRadius(mouthRadius) 
+    .outerRadius(mouthRadius + mouthWidth)
+    .startAngle(Math.PI /2 ) // starts fomr 12 oclock
+    .endAngle(Math.PI * 3 /2);
+
   return (
     <svg width={width} height={height}>
-      <circle
-        cx={centerX}
-        cy={centerY}
-        r={centerY - strokeWidth/2}
-        fill="yellow"
-        stroke="black"
-        stroke-width={strokeWidth}
-      ></circle>
-      <circle
-        cx={centerX - eyeOffsetX}
-        cy={centerY -eyeOffsetY}
-        r={eyeRadius}
-        fill="black"
-        stroke="black"
-        stroke-width="2px"
-      ></circle>
-      <circle
-        cx={centerX + eyeOffsetX}
-        cy={centerY -eyeOffsetY}
-        r={eyeRadius}
-        fill="black"
-        stroke="black"
-        stroke-width="2px"
-      ></circle>
+      {/* svg group element */}
+      {/* translate everything to the center */}
+      <g transform={`translate(${centerX},${centerY})`}>        
+        <circle
+          r={centerY - strokeWidth / 2}
+          fill="yellow"
+          stroke="black"
+          strokeWidth={strokeWidth}
+        ></circle>
+        <circle
+          cx={-eyeOffsetX}
+          cy={-eyeOffsetY}
+          r={eyeRadius}
+          fill="black"
+          stroke="black"
+          strokeWidth="2px"
+        ></circle>
+        <circle
+          cx={eyeOffsetX}
+          cy={-eyeOffsetY}
+          r={eyeRadius}
+          fill="black"
+          stroke="black"
+          strokeWidth="2px"
+        ></circle>
+        <path d={mouthArc()}></path>
+      </g>
     </svg>
   );
 };
