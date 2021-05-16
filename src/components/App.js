@@ -1,13 +1,10 @@
 import './App.css';
-// import BasicTable from './Table/BasicTable.js';
-//import SortingTable from './Table/SortingTable.js';
-// import RowSelectionTable from './Table/RowSelectionTable';
-import Face from './Face/Face';
+import DthreeCsv from "../components/d3/DthreeCSV";
 
 function App() {
   return (
     <div className="App">
-      <Face></Face>
+      <DthreeCsv></DthreeCsv>
     </div>
   );
 }
