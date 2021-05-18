@@ -7,38 +7,55 @@
 // takes csv string, returns array of objects.
 // each object represents one row of the table
 // each array also contains an object columns
-import * as d3 from "d3";
-import { useState, useEffect } from "react";
-const fetchText = async (url) => {
-  const response = await fetch(url);
-  return await response.text();
-};
+import React, { useState, useEffect } from 'react';
+
+import { csv, arc, pie } from 'd3';
 
 const csvUrl =
-  "https://gist.githubusercontent.com/curran/b236990081a24761f7000567094914e0/raw/cssNamedColors.csv";
+  'https://gist.githubusercontent.com/curran/b236990081a24761f7000567094914e0/raw/cssNamedColors.csv';
 
-const message = (data) => {
-  let message = "";
-  message = message + Math.round(d3.csvFormat(data).length / 1024) + " kb\n";
-  message = message + data.length + " rows\n";
-  message = message + data.columns.length + " columns\n";
+const width = window.innerWidth;
+const height = window.innerHeight;
+const centerX = width / 2;
+const centerY = height / 2;
 
-  return message;
-};
+const pieArc = arc()
+  .innerRadius(0)
+  .outerRadius(width);
 
 const DthreeCsv = () => {
   const [data, setData] = useState(null);
 
-  useEffect(()=>{
-    d3.csv(csvUrl).then((data) => {
-      setData(data);
-      console.log(data)
-    });
-
+  useEffect(() => {
+    csv(csvUrl).then(setData);
   }, []);
-  
 
-  return <div>Data is {data ? message(data) : "loading"} </div>;
+  if (!data) {
+    return <pre>Loading...</pre>;
+  }
+
+  const colorPie = pie().value(1);
+
+  return (
+    <svg width={width} height={height}>
+      <g transform={`translate(${centerX},${centerY})`}>
+        {colorPie(data).map(d => (
+          <path fill={d.data['RGB hex value']} d={pieArc(d)} />
+        ))}
+      </g>
+    </svg>
+  );
 };
 
 export default DthreeCsv;
+
+// To compute the arcs manually (without d3.pie):
+// data.map((d, i) => (
+//   <path
+//     fill={d['RGB hex value']}
+//     d={pieArc({
+//       startAngle: (i / data.length) * 2 * Math.PI,
+//       endAngle: ((i + 1) / data.length) * 2 * Math.PI
+//     })}
+//   />
+// ))
