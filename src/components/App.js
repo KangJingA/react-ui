@@ -1,5 +1,5 @@
 import './App.css';
-import BarChart from "../components/d3/BarChart";
+import BarChart from "./d3/Barchart/BarChart";
 
 function App() {
   return (
