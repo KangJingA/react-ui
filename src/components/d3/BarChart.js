@@ -56,16 +56,30 @@ const BarChart = () => {
         {xScale.ticks().map((tickValue) => (
           <g transform={`translate(${xScale(tickValue)},0)`}>
             <line y2={innerHeight} stroke="black"></line>
-            <text key={tickValue} dy="0.71em" style={{textAnchor: 'middle'}} y={innerHeight + 3}>{tickValue}</text>
+            <text
+              key={tickValue}
+              dy="0.71em"
+              style={{ textAnchor: "middle" }}
+              y={innerHeight + 3}
+            >
+              {tickValue}
+            </text>
           </g>
         ))}
         {yScale.domain().map((tickValue) => (
-          <g transform={`translate(0,${yScale(tickValue)})`}>
-            <text key={tickValue} dy="0.32em" style={{textAnchor: 'end'}} x={-3} y={yScale.bandwidth() / 2}>{tickValue}</text>
-          </g>
+          <text
+            key={tickValue}
+            dy="0.32em"
+            style={{ textAnchor: "end" }}
+            x={-3}
+            y={yScale(tickValue) + yScale.bandwidth() / 2}
+          >
+            {tickValue}
+          </text>
         ))}
         {data.map((d) => (
           <rect
+            key={d.country}
             x={0}
             y={yScale(d.Country)}
             width={xScale(d.Population)}
