@@ -1,10 +1,10 @@
 import './App.css';
-import DthreeCsv from "../components/d3/DthreeCSV";
+import BarChart from "../components/d3/BarChart";
 
 function App() {
   return (
     <div className="App">
-      <DthreeCsv></DthreeCsv>
+      <BarChart></BarChart>
     </div>
   );
 }
