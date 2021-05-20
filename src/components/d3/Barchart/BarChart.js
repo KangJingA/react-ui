@@ -1,12 +1,15 @@
-import { scaleBand, scaleLinear, max } from "d3";
+import { scaleBand, scaleLinear, max, format } from "d3";
 import { useData } from "./useData";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
 import { Marks } from "./Marks";
 
+import "./BarChart.css";
+
 const width = window.innerWidth;
 const height = window.innerHeight;
-const margin = { top: 20, right: 20, bottom: 20, left: 200 };
+const margin = { top: 20, right: 30, bottom: 70, left: 220 };
+const xAxisLabelOffset = 50;
 
 const BarChart = () => {
   const data = useData();
@@ -23,6 +26,9 @@ const BarChart = () => {
   // remove duplicate code logic
   const yValue = (data) => data.Country;
   const xValue = (data) => data.Population;
+  
+  const siFormat = format('.2s');
+  const xAxisTickFormat = tickValue => siFormat(tickValue).replace('G', 'B');
 
   // domain => "data space"
   // range => "screen space"
@@ -45,14 +51,23 @@ const BarChart = () => {
   return (
     <svg width={width} height={height}>
       <g transform={`translate(${margin.left},${margin.top})`}>
-        <AxisBottom xScale={xScale} innerHeight={innerHeight} />
+        <AxisBottom xScale={xScale} innerHeight={innerHeight} tickFormat={xAxisTickFormat} />
         <AxisLeft yScale={yScale} />
+        <text
+          x={innerWidth / 2}
+          y={innerHeight + xAxisLabelOffset}
+          textAnchor="middle"
+          className="axis-label"
+        >
+          Population
+        </text>
         <Marks
           data={data}
           xScale={xScale}
           yScale={yScale}
           xValue={xValue}
           yValue={yValue}
+          tooltipFormat={xAxisTickFormat}
         />
       </g>
     </svg>
