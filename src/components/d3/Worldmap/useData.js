@@ -12,12 +12,12 @@ export const useData = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    json(jsonUrl).then(topology => {
-      console.log(topology)
+    json(jsonUrl).then((topology) => {
+      console.log(topology);
       const { countries, land } = topology.objects;
       setData({
         land: feature(topology, land),
-        interiors: mesh(topology, countries, (a, b) => a !== b) // only include interior outline
+        interiors: mesh(topology, countries, (a, b) => a !== b), // only include interior outline
       });
     }); // in topoJSON
   }, []);

@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import Worldmap from "./d3/Worldmap/Worldmap";
 
 function App() {

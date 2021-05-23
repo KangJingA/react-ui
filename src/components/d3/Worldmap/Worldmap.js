@@ -1,4 +1,4 @@
-import { } from "d3";
+import {} from "d3";
 import { useData } from "./useData";
 import { Marks } from "./Marks";
 
@@ -16,14 +16,10 @@ const Worldmap = () => {
     return <pre>Loading data...</pre>;
   }
 
- 
-
   return (
     <svg width={width} height={height}>
       <g>
-        <Marks
-          data={data}
-        />
+        <Marks data={data} />
       </g>
     </svg>
   );
