@@ -1,10 +1,10 @@
 import './App.css';
-import BarChart from "./d3/Barchart/BarChart";
-import Linechart from "./d3/Linechart/Linechart"
+import Worldmap from "./d3/Worldmap/Worldmap";
+
 function App() {
   return (
     <div className="App">
-      <Linechart></Linechart>
+      <Worldmap></Worldmap>
     </div>
   );
 }
