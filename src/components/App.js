@@ -1,10 +1,14 @@
 import "./App.css";
-import Worldmap from "./d3/Worldmap/Worldmap";
+// import Scatterplot from "./d3/Scatterplot/Scatterplot";
+// import { Dropdown } from "./Dropdown/Dropdown";
+import ScatterplotDropdown from "./Combined/ScatterplotDropdown"
+
 
 function App() {
+  
   return (
     <div className="App">
-      <Worldmap></Worldmap>
+     <ScatterplotDropdown/>
     </div>
   );
 }

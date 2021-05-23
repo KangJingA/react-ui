@@ -10,6 +10,7 @@
     "date-fns": "^2.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-dropdown-browser": "^1.8.0",
     "react-scripts": "4.0.3",
     "react-table": "^7.7.0",
     "topojson": "^3.0.2",

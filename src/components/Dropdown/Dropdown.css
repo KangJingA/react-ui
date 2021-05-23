@@ -1,0 +1,12 @@
+.dropdown-container {
+  display: flex;
+  margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+label, select {
+    font-size: 4em;
+  }
+  select option {
+    font-size: 2rem;
+  }
