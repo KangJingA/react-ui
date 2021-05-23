@@ -1,10 +1,10 @@
 import './App.css';
 import BarChart from "./d3/Barchart/BarChart";
-import Scatterplot from "./d3/Scatterplot/Scatterplot"
+import Linechart from "./d3/Linechart/Linechart"
 function App() {
   return (
     <div className="App">
-      <Scatterplot></Scatterplot>
+      <Linechart></Linechart>
     </div>
   );
 }
