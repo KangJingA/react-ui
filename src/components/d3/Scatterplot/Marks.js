@@ -7,6 +7,7 @@ export const Marks = ({
   colorScale,
   colorValue,
   tooltipFormat,
+  circleRadius
 }) =>
   data.map((d) => (
     <circle
@@ -14,7 +15,7 @@ export const Marks = ({
       cx={xScale(xValue(d))}
       cy={yScale(yValue(d))}
       fill={colorScale(colorValue(d))}
-      r={10}
+      r={circleRadius}
     >
       <title>{tooltipFormat(xValue(d))}</title>
     </circle>

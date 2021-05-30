@@ -1,4 +1,5 @@
 import { scaleLinear, scaleOrdinal, format, extent } from "d3";
+import { ColorLegend } from "./ColorLegend";
 import { useData } from "./useData";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
@@ -8,7 +9,7 @@ import "./Scatterplot.css";
 
 const width = window.innerWidth;
 const height = window.innerHeight;
-const margin = { top: 20, right: 30, bottom: 70, left: 100 };
+const margin = { top: 20, right: 200, bottom: 70, left: 100 };
 const xAxisLabelOffset = 50;
 const yAxisLabelOffset = 45;
 
@@ -32,9 +33,12 @@ const Scatterplot = () => {
   const yAxisLabel = "Sepal Width";
 
   const colorValue = (data) => data.species;
+  const colorLegendLabel = 'Species';
+  
   const siFormat = format(".2s");
   const xAxisTickFormat = (tickValue) => siFormat(tickValue).replace("G", "B");
 
+  const circleRadius = 7;
   // domain => "data space"
   // range => "screen space"
 
@@ -54,8 +58,8 @@ const Scatterplot = () => {
     .range([0, innerHeight]); // set aside space for margin
 
   const colorScale = scaleOrdinal()
-        .domain(data.map(colorValue)) // array
-        .range(['#E6842A', '#137B80', '#8E6C8A']) //map to range of colors
+    .domain(data.map(colorValue)) // array
+    .range(["#E6842A", "#137B80", "#8E6C8A"]); //map to range of colors
 
   return (
     <svg width={width} height={height}>
@@ -83,6 +87,17 @@ const Scatterplot = () => {
         >
           {xAxisLabel}
         </text>
+        <g transform={`translate(${innerWidth + 60}, 60)`}>
+          <text x={35} y={-25} className="axis-label" textAnchor="middle">
+            {colorLegendLabel}
+          </text>
+          <ColorLegend
+            colorScale={colorScale}
+            tickSpacing={22}
+            tickTextOffset={12}
+            tickSize={circleRadius}
+          />
+        </g>
         <Marks
           data={data}
           xScale={xScale}
@@ -92,6 +107,7 @@ const Scatterplot = () => {
           colorScale={colorScale}
           colorValue={colorValue}
           tooltipFormat={xAxisTickFormat}
+          circleRadius={circleRadius}
         />
       </g>
     </svg>
