@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { scaleLinear, scaleOrdinal, format, extent } from "d3";
 import { ColorLegend } from "./ColorLegend";
 import { useData } from "./useData";
@@ -12,9 +13,11 @@ const height = window.innerHeight;
 const margin = { top: 20, right: 200, bottom: 70, left: 100 };
 const xAxisLabelOffset = 50;
 const yAxisLabelOffset = 45;
+const fadeOpacity = 0.2;
 
 const Scatterplot = () => {
   const data = useData();
+  const [hoveredValue, setHoveredValue] = useState(null);
 
   if (!data) {
     return <pre>Loading data...</pre>;
@@ -33,8 +36,9 @@ const Scatterplot = () => {
   const yAxisLabel = "Sepal Width";
 
   const colorValue = (data) => data.species;
-  const colorLegendLabel = 'Species';
-  
+  const colorLegendLabel = "Species";
+  const filteredData = data.filter((d) => hoveredValue === colorValue);
+
   const siFormat = format(".2s");
   const xAxisTickFormat = (tickValue) => siFormat(tickValue).replace("G", "B");
 
@@ -96,13 +100,29 @@ const Scatterplot = () => {
             tickSpacing={22}
             tickTextOffset={12}
             tickSize={circleRadius}
+            onHover={setHoveredValue}
+            hoveredValue={hoveredValue}
+            fadeOpacity={fadeOpacity}
+          />
+        </g>
+        <g opacity={hoveredValue ? fadeOpacity : 1}>
+          <Marks
+            data={data}
+            xScale={xScale}
+            xValue={xValue}
+            yScale={yScale}
+            yValue={yValue}
+            colorScale={colorScale}
+            colorValue={colorValue}
+            tooltipFormat={xAxisTickFormat}
+            circleRadius={circleRadius}
           />
         </g>
         <Marks
-          data={data}
+          data={filteredData}
           xScale={xScale}
-          yScale={yScale}
           xValue={xValue}
+          yScale={yScale}
           yValue={yValue}
           colorScale={colorScale}
           colorValue={colorValue}
