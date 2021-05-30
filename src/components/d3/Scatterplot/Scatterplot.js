@@ -1,4 +1,4 @@
-import { scaleLinear, format, extent } from "d3";
+import { scaleLinear, scaleOrdinal, format, extent } from "d3";
 import { useData } from "./useData";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
@@ -26,11 +26,12 @@ const Scatterplot = () => {
   // access the value that you want from the data
   // remove duplicate code logic
   const yValue = (data) => data.petal_length;
-  const xAxisLabel = 'Petal Length';
+  const xAxisLabel = "Petal Length";
 
   const xValue = (data) => data.sepal_width;
-  const yAxisLabel = 'Sepal Width';
+  const yAxisLabel = "Sepal Width";
 
+  const colorValue = (data) => data.species;
   const siFormat = format(".2s");
   const xAxisTickFormat = (tickValue) => siFormat(tickValue).replace("G", "B");
 
@@ -44,14 +45,17 @@ const Scatterplot = () => {
 
   // width will be population size
   const xScale = scaleLinear()
-    .domain((extent(data,xValue)))
+    .domain(extent(data, xValue))
     .range([0, innerWidth])
     .nice();
 
   const yScale = scaleLinear()
     .domain(extent(data, yValue))
-    .range([0, innerHeight]) // set aside space for margin
-    
+    .range([0, innerHeight]); // set aside space for margin
+
+  const colorScale = scaleOrdinal()
+        .domain(data.map(colorValue)) // array
+        .range(['#E6842A', '#137B80', '#8E6C8A']) //map to range of colors
 
   return (
     <svg width={width} height={height}>
@@ -64,12 +68,13 @@ const Scatterplot = () => {
         <text
           textAnchor="middle"
           className="axis-label"
-          transform={`translate(${-yAxisLabelOffset},${innerHeight /
-            2}) rotate(-90)`}
+          transform={`translate(${-yAxisLabelOffset},${
+            innerHeight / 2
+          }) rotate(-90)`}
         >
           {yAxisLabel}
         </text>
-        <AxisLeft yScale={yScale} innerWidth={innerWidth}/>
+        <AxisLeft yScale={yScale} innerWidth={innerWidth} />
         <text
           x={innerWidth / 2}
           y={innerHeight + xAxisLabelOffset}
@@ -84,6 +89,8 @@ const Scatterplot = () => {
           yScale={yScale}
           xValue={xValue}
           yValue={yValue}
+          colorScale={colorScale}
+          colorValue={colorValue}
           tooltipFormat={xAxisTickFormat}
         />
       </g>
