@@ -6,6 +6,7 @@ const csvUrl = 'https://gist.githubusercontent.com/curran/13d30e855d48cdd6f22acd
 const row = d => {
   d.lat = +d.lat; // converts string to number
   d.lng = +d.lng;
+  d.population = +d.population;
   return d;
 };
 
